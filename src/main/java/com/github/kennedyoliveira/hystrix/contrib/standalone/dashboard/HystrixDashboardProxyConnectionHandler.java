@@ -78,7 +78,7 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
     // add the request params to the url to proxy, because need to forward Delay and maybe another future param
     MultiMap params = serverRequest.params();
     for (String key : params.names()) {
-      if (!key.equals("origin") && !key.equals("authorization")) {
+      if (!"origin".equals(key) && !"authorization".equals(key)) {
         String value = params.get(key);
 
         if (hasFirstParameter) {
