@@ -13,4 +13,4 @@ script:
   ./gradlew clean check
 
 after_script:
-  ./gradlew versioneye-update
+  ./gradlew -Pversioneye.api_key=$VERSIONEYE_API_KEY versioneye-update
