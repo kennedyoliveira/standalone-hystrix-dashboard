@@ -1,0 +1,195 @@
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath 'com.netflix.nebula:nebula-publishing-plugin:4.4.4'
+    }
+}
+
+plugins {
+    id 'nebula.dependency-recommender' version '3.1.0'
+    id 'nebula.dependency-lock' version '4.2.0'
+    id 'nebula.nebula-release' version '4.0.1'
+    id 'nebula.contacts' version '3.0.1'
+    id 'nebula.info' version '3.0.3'
+    id 'nebula.provided-base' version '3.0.3'
+    id 'nebula.nebula-bintray' version '3.3.4'
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'nebula.maven-publish'
+apply plugin: 'nebula.nebula-bintray-publishing'
+apply plugin: 'nebula.source-jar'
+apply plugin: 'nebula.javadoc-jar'
+apply plugin: 'nebula.info'
+
+// QA plugins
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
+apply plugin: 'build-dashboard'
+
+group 'com.github.kennedyoliveira'
+description = 'Standalone Hystrix-Dashboard implementation.'
+
+contacts {
+    'kennedy.oliveira@outlook.com' {
+        moniker 'Kennedy Oliveira'
+        github 'kennedyoliveira'
+        roles 'owner', 'developer', 'notify'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.12'
+}
+
+// for the application plugin
+mainClassName = 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.StandaloneHystrixDashboardRunner'
+
+distributions {
+    main {
+        contents {
+            exclude '**/*lombok*'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+def recomendationsFile = rootProject.file('dependencies-version.properties')
+
+dependencyRecommendations {
+    propertiesFile file: recomendationsFile
+}
+
+configurations {
+    hystrixDashboard
+}
+
+dependencies {
+    hystrixDashboard('com.netflix.hystrix:hystrix-dashboard') {
+        transitive = false
+    }
+
+    provided group: 'org.projectlombok', name: 'lombok'
+
+    compile(group: 'io.vertx', name: 'vertx-web') {
+        // won't use it
+        exclude module: 'vertx-auth-common'
+        exclude module: 'jackson-core'
+        exclude module: 'jackson-databind'
+    }
+
+    compile group: 'org.slf4j', name: 'slf4j-api'
+    compile group: 'ch.qos.logback', name: 'logback-classic'
+
+    testCompile group: 'junit', name: 'junit'
+    testCompile group: 'io.vertx', name: 'vertx-unit'
+}
+
+findbugs {
+    excludeFilter = file("$rootProject.projectDir/findbugs-exclusions.xml")
+}
+
+// qa plugin configuration to export html instead of xml
+tasks.withType(FindBugs) {
+    reports {
+        html.enabled = true
+        xml.enabled = false
+    }
+}
+
+tasks.withType(Pmd) {
+    reports {
+        html.enabled = true
+        xml.enabled = false
+    }
+}
+
+publishing {
+    publications {
+        nebula(MavenPublication) {
+            pom.withXml {
+                asNode().appendNode('licenses').appendNode('license').with {
+                    appendNode('name', 'MIT License')
+                    appendNode('url', 'https://opensource.org/licenses/MIT')
+                    appendNode('distribution', 'repo')
+                }
+            }
+
+            // fat jar to be downloadable from binTray and maven central
+            artifact fatJar {
+                classifier 'all'
+            }
+        }
+    }
+}
+
+bintray {
+    pkg {
+        repo = 'maven'
+        userOrg = ''
+        licenses = ['MIT']
+        websiteUrl = 'https://github.com/kennedyoliveira/standalone-hystrix-dashboard'
+        issueTrackerUrl = 'https://github.com/kennedyoliveira/standalone-hystrix-dashboard/issues'
+        vcsUrl = 'https://github.com/kennedyoliveira/standalone-hystrix-dashboard.git'
+        labels = ['hyxtrix-dashboard', 'vertx3', 'standalone']
+        publicDownloadNumbers = true
+        version {
+            gpg {
+                if (project.hasProperty('bintraySignPass'))
+                    passphrase = project.property('bintraySignPass')
+            }
+        }
+    }
+}
+
+/**
+ * Extracts the hystrix-dashboard webapp content, removing WEB-INF and META-INF since it won't be used
+ */
+task extractHystrixDashboard(type: Copy) {
+    from(configurations.hystrixDashboard.collect { zipTree(it).asFileTree }) {
+        // remove because it won't be used
+        exclude { it.relativePath.pathString.startsWith('WEB-INF') }
+        exclude { it.relativePath.pathString.startsWith('META-INF') }
+    }
+
+    into "$buildDir/resources/main/webroot"
+}
+
+tasks.processResources.finalizedBy 'extractHystrixDashboard'
+
+task('runDashboard', dependsOn: ['classes'], type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+
+    main = 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.StandaloneHystrixDashboardRunner'
+
+    jvmArgs = ['-Xmx2048m']
+}
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': project.name,
+                'Implementation-Version': project.version,
+                'Main-Class': 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.StandaloneHystrixDashboardRunner'
+    }
+
+    baseName = project.name
+    from({ configurations.compile.collect { it.isDirectory() ? it : zipTree(it).asFileTree } }) {
+        // exclude { println it.relativePath }
+        exclude {
+            def path = it.relativePath.pathString
+            path.startsWith('io/vertx/groovy') || // groovy not using
+                    path.startsWith('io/vertx/groovy') || // groovy not using
+                    path.startsWith('io/vertx/rxjava') || // rx java not using
+                    path.startsWith('vertx-web-js') || // js not using
+                    path.startsWith('vertx-java') || // java templates not using
+                    path.startsWith('vertx-web') || // ruby classes not using
+                    path.contains("lombok") // lombok is provided
+        }
+    }
+    with jar
+}
