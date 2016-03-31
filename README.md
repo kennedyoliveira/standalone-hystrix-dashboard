@@ -1,6 +1,9 @@
 # Standalone Hystrix Dashboard
 Standalone *hystrix dashboard* that can be started using a single fatJar and is very lightweight and fast!
 
+[![Build Status](https://travis-ci.org/kennedyoliveira/standalone-hystrix-dashboard.svg?branch=master)](https://travis-ci.org/kennedyoliveira/standalone-hystrix-dashboard)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/ee8e2b298bf24109b642cde4a4df8635)](https://www.codacy.com/app/kennedy-oliveira/standalone-hystrix-dashboard)
+[![Dependency Status](https://www.versioneye.com/user/projects/56fcad23905db1003b29956c/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56fcad23905db1003b29956c)
 
 ## Features
  - Extremely fast startup (About half a sec)
