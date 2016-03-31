@@ -93,6 +93,12 @@
         "ch.qos.logback:logback-classic": {
             "locked": "1.1.7"
         },
+        "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
+            "locked": "1.5.1"
+        },
+        "com.netflix.hystrix:hystrix-core": {
+            "locked": "1.5.1"
+        },
         "io.vertx:vertx-unit": {
             "locked": "3.2.1"
         },
@@ -112,6 +118,12 @@
     "testCompileClasspath": {
         "ch.qos.logback:logback-classic": {
             "locked": "1.1.7"
+        },
+        "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
+            "locked": "1.5.1"
+        },
+        "com.netflix.hystrix:hystrix-core": {
+            "locked": "1.5.1"
         },
         "io.vertx:vertx-unit": {
             "locked": "3.2.1"
@@ -133,6 +145,12 @@
         "ch.qos.logback:logback-classic": {
             "locked": "1.1.7"
         },
+        "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
+            "locked": "1.5.1"
+        },
+        "com.netflix.hystrix:hystrix-core": {
+            "locked": "1.5.1"
+        },
         "io.vertx:vertx-unit": {
             "locked": "3.2.1"
         },
@@ -152,6 +170,12 @@
     "testRuntime": {
         "ch.qos.logback:logback-classic": {
             "locked": "1.1.7"
+        },
+        "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
+            "locked": "1.5.1"
+        },
+        "com.netflix.hystrix:hystrix-core": {
+            "locked": "1.5.1"
         },
         "io.vertx:vertx-unit": {
             "locked": "3.2.1"

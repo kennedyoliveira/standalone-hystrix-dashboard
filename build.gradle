@@ -87,6 +87,8 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit'
     testCompile group: 'io.vertx', name: 'vertx-unit'
+    testCompile group: 'com.netflix.hystrix', name: 'hystrix-core'
+    testCompile group: 'com.github.kennedyoliveira', name: 'hystrix-vertx-metrics-stream'
 }
 
 findbugs {
