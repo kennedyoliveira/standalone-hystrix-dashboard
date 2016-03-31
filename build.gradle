@@ -13,6 +13,7 @@ plugins {
     id 'nebula.info' version '3.0.3'
     id 'nebula.provided-base' version '3.0.3'
     id 'nebula.nebula-bintray' version '3.3.4'
+    id "org.standardout.versioneye" version '1.2.0'
 }
 
 apply plugin: 'java'
@@ -93,6 +94,10 @@ dependencies {
 
 findbugs {
     excludeFilter = file("$rootProject.projectDir/findbugs-exclusions.xml")
+}
+
+pmd {
+    toolVersion = '5.4.1'
 }
 
 // qa plugin configuration to export html instead of xml

@@ -67,7 +67,7 @@
     },
     "pmd": {
         "net.sourceforge.pmd:pmd-java": {
-            "locked": "5.2.3"
+            "locked": "5.4.1"
         }
     },
     "provided": {
