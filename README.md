@@ -29,3 +29,30 @@ more easily.
  
 ## Download
 The standalone-hystrix-dashboard is available at `Maven Central`, `BinTray`.
+
+
+## Run from source
+To run the project from source simple do the following:
+```
+git clone https://github.com/kennedyoliveira/standalone-hystrix-dashboard.git
+cd standalone-hystrix-dashboard
+./gradlew runDashboard
+```
+
+it should start the dashboard on default port `7979`.
+
+## Generate fatJar from source
+To generate the fatJar from source simple do the following:
+```
+git clone https://github.com/kennedyoliveira/standalone-hystrix-dashboard.git
+cd standalone-hystrix-dashboard
+./gradlew fatJar
+```
+and your fatJar should be in `build/libs/standalone-hystrix-dashboard-{VERSION}-all.jar`.
+
+## Run fatJar
+Generate the fatJar from source or download it and simple do the following:
+```
+java -jar standalone-hystrix-dashboard-{VERSION}-all.jar
+```
+it should start the dashboard on default port `7979`.
