@@ -79,3 +79,6 @@ java -jar -DserverPort=8080 -DbindAddress=192.168.1.100 standalone-hystrix-dashb
 | `serverPort` | The port that the server will listen to. | `7979` |
 | `bindAddress` | The address that the server will bind to. | `0.0.0.0` |
 | `disableCompression` | Flag to disable compression support for the metrics stream | `enabled` | 
+
+## Demonstration
+![Demonstration](https://dl.dropboxusercontent.com/u/17155314/standalone-hystrix-dashboard-example.gif)
