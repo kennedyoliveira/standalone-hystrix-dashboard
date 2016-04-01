@@ -15,6 +15,7 @@ Standalone *hystrix dashboard* that can be started using a single fatJar and is 
  - Non Blocking
  - Implemented with [Vert.x](http://vertx.io/)
  - Compression enable (Saves alot of bandwidth)
+ - Docker Image to easily deploy
  
  
 ## Another hystrix-dashboards web app?
@@ -44,6 +45,7 @@ java -jar standalone-hystrix-dashboard-{VERSION}-all.jar
 ```
 it should start the dashboard on default port `7979`.
 
+
 ## Run from source
 To run the project from source simple do the following:
 ```
@@ -62,6 +64,20 @@ cd standalone-hystrix-dashboard
 ./gradlew fatJar
 ```
 and your fatJar should be in `build/libs/standalone-hystrix-dashboard-{VERSION}-all.jar`.
+
+
+## Docker Image
+There is a docker image available that you can run by:
+```
+docker run --rm -ti -p 7979:7979 kennedyoliveira/hystrix-dashboard
+```
+
+You can pass configuration or jvm params by using the `ENV VAR` `JVM_ARGS` as with the example below:
+```
+docker run --rm -ti -p 7979:7979 -e JVM_ARGS='-Xmx2048m' kennedyoliveira/hystrix-dashboard
+```
+
+The docker images will have tags equal to hystrix-dashboard and hystrix-core versions, so if you need a especific version you can check there, starting with 1.5.1+
 
 
 ## Configurations
