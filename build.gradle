@@ -1,10 +1,3 @@
-buildscript {
-    repositories { jcenter() }
-    dependencies {
-        classpath 'com.netflix.nebula:nebula-publishing-plugin:4.4.4'
-    }
-}
-
 plugins {
     id 'nebula.dependency-recommender' version '3.1.0'
     id 'nebula.dependency-lock' version '4.2.0'
@@ -18,10 +11,8 @@ plugins {
 
 apply plugin: 'java'
 apply plugin: 'application'
-apply plugin: 'nebula.maven-publish'
+apply plugin: 'maven-publish'
 apply plugin: 'nebula.nebula-bintray-publishing'
-apply plugin: 'nebula.source-jar'
-apply plugin: 'nebula.javadoc-jar'
 apply plugin: 'nebula.info'
 
 // QA plugins

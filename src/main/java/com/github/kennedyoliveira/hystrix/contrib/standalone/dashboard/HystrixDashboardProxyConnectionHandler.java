@@ -124,7 +124,6 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
     final HttpServerRequest serverRequest = requestCtx.request();
     final HttpServerResponse serverResponse = requestCtx.response();
 
-
     final String host = proxiedUrl.getHost();
     final String scheme = proxiedUrl.getScheme();
     final String path = proxiedUrl.getPath();
