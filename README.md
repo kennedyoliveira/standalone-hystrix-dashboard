@@ -9,7 +9,7 @@ Standalone *hystrix dashboard* that can be started using a single fatJar and is 
 
 ## Features
  - Extremely fast startup (About half a sec)
- - Extremely lightweight, the fat jar is less than 4 MBs
+ - Extremely lightweight, the fat jar is around 5 MBs
  - Easy to start, just run the JAR
  - Doesn't need a servlet container
  - Non Blocking
@@ -43,6 +43,14 @@ Generate the fatJar from source or download it and simple do the following:
 java -jar standalone-hystrix-dashboard-{VERSION}-all.jar
 ```
 it should start the dashboard on default port `7979`.
+
+## Run on background
+### Starting the application
+Generate the fatJar from source or download it and simple do the following:
+```
+java -jar standalone-hystrix-dashboard-{VERSION}-all.jar start
+```
+it should start the dashboard on default port `7979` and it will print an UUID  .
 
 ## Run from source
 To run the project from source simple do the following:

@@ -36,7 +36,7 @@ task wrapper(type: Wrapper) {
 }
 
 // for the application plugin
-mainClassName = 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.StandaloneHystrixDashboardRunner'
+mainClassName = 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.HystrixDashboardLauncher'
 
 distributions {
     main {
@@ -70,8 +70,6 @@ dependencies {
     compile(group: 'io.vertx', name: 'vertx-web') {
         // won't use it
         exclude module: 'vertx-auth-common'
-        exclude module: 'jackson-core'
-        exclude module: 'jackson-databind'
     }
 
     compile group: 'org.slf4j', name: 'slf4j-api'
@@ -162,7 +160,7 @@ tasks.processResources.finalizedBy 'extractHystrixDashboard'
 task('runDashboard', dependsOn: ['classes'], type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 
-    main = 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.StandaloneHystrixDashboardRunner'
+    main = 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.HystrixDashboardLauncher'
 
     jvmArgs = ['-Xmx2048m']
 }
@@ -172,7 +170,8 @@ task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': project.name,
                 'Implementation-Version': project.version,
-                'Main-Class': 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.StandaloneHystrixDashboardRunner'
+                'Main-Class': 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.HystrixDashboardLauncher',
+                'Main-Verticle': 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.HystrixDashboardVerticle'
     }
 
     baseName = project.name

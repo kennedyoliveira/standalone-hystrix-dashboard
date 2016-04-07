@@ -31,7 +31,7 @@ public class HystrixDashboardVerticle extends AbstractVerticle {
                       if (counter.failed()) {
                         startFuture.fail(counter.cause());
                       } else {
-                        log.info("Initializing the HystrixDashboardVerticle instance {} - {}", counter.result(), deploymentID());
+                        log.info("Initializing the HystrixDashboardVerticle instance {}", counter.result());
                         initialize(startFuture);
                       }
                     });
@@ -63,11 +63,14 @@ public class HystrixDashboardVerticle extends AbstractVerticle {
     });
     mainRouter.mountSubRouter("/hystrix-dashboard", hystrixRouter);
 
+    final Integer serverPort = config().getInteger(Configuration.SERVER_PORT, 7979);
+    final String bindAddress = config().getString(Configuration.BIND_ADDRESS, "0.0.0.0");
+
     final HttpServerOptions options = new HttpServerOptions().setTcpKeepAlive(true)
                                                              .setIdleTimeout(10000)
-                                                             .setPort(Configuration.SERVER_PORT)
-                                                             .setHost(Configuration.BIND_ADDRESS)
-                                                             .setCompressionSupported(!Configuration.DISABLE_COMPRESSION);
+                                                             .setPort(serverPort)
+                                                             .setHost(bindAddress)
+                                                             .setCompressionSupported(!config().getBoolean(Configuration.DISABLE_COMPRESSION, Boolean.FALSE));
 
     vertx.createHttpServer(options)
          .requestHandler(mainRouter::accept)
@@ -75,6 +78,10 @@ public class HystrixDashboardVerticle extends AbstractVerticle {
            if (result.failed()) {
              startFuture.fail(result.cause());
            } else {
+             log.info("Listening on port: {}", serverPort);
+             log.info("Access the dashboard in your browser: http://{}:{}/hystrix-dashboard/",
+                      "0.0.0.0".equals(bindAddress) ? "localhost" : bindAddress, // NOPMD
+                      serverPort);
              startFuture.complete();
            }
          });
