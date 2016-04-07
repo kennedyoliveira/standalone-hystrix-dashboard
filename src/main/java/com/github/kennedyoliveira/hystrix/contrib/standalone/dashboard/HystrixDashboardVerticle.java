@@ -64,7 +64,7 @@ public class HystrixDashboardVerticle extends AbstractVerticle {
     mainRouter.mountSubRouter("/hystrix-dashboard", hystrixRouter);
 
     final Integer serverPort = config().getInteger(Configuration.SERVER_PORT, 7979);
-    final String bindAddress = config().getString(Configuration.BIND_ADDRESS, "0.0.0.0");
+    final String bindAddress = config().getString(Configuration.BIND_ADDRESS, "0.0.0.0"); // NOPMD
 
     final HttpServerOptions options = new HttpServerOptions().setTcpKeepAlive(true)
                                                              .setIdleTimeout(10000)
