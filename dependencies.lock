@@ -10,7 +10,7 @@
             "locked": "1.16.8"
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.20"
+            "locked": "1.7.21"
         }
     },
     "compileClasspath": {
@@ -24,7 +24,7 @@
             "locked": "1.16.8"
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.20"
+            "locked": "1.7.21"
         }
     },
     "compileOnly": {
@@ -38,7 +38,7 @@
             "locked": "1.16.8"
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.20"
+            "locked": "1.7.21"
         }
     },
     "default": {
@@ -52,7 +52,7 @@
             "project": true
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.20"
+            "locked": "1.7.21"
         }
     },
     "findbugs": {
@@ -86,7 +86,7 @@
             "locked": "1.16.8"
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.20"
+            "locked": "1.7.21"
         }
     },
     "testCompile": {
@@ -112,7 +112,7 @@
             "locked": "1.16.8"
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.20"
+            "locked": "1.7.21"
         }
     },
     "testCompileClasspath": {
@@ -138,7 +138,7 @@
             "locked": "1.16.8"
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.20"
+            "locked": "1.7.21"
         }
     },
     "testCompileOnly": {
@@ -164,7 +164,7 @@
             "locked": "1.16.8"
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.20"
+            "locked": "1.7.21"
         }
     },
     "testRuntime": {
@@ -190,7 +190,7 @@
             "locked": "1.16.8"
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.20"
+            "locked": "1.7.21"
         }
     }
 }

@@ -25,6 +25,9 @@ public class HystrixDashboardVerticleTest {
   @Rule
   public RunTestOnContext runTestOnContext = new RunTestOnContext();
 
+  // default port
+  int serverPort = 7979;
+
   @Before
   public void setUp(TestContext testContext) throws Exception {
     EventMetricsStreamHelper.deployStandaloneMetricsStream(runTestOnContext.vertx(), testContext.asyncAssertSuccess());
@@ -35,13 +38,13 @@ public class HystrixDashboardVerticleTest {
   public void testDashboard(TestContext testContext) throws Exception {
     final Async asyncRedirect = testContext.async();
     final HttpClient httpClient = runTestOnContext.vertx().createHttpClient();
-    httpClient.getNow(Configuration.SERVER_PORT, "localhost", "/hystrix-dashboard", response -> {
+    httpClient.getNow(serverPort, "localhost", "/hystrix-dashboard", response -> {
       testContext.assertEquals(301, response.statusCode()); // redirect due to missing trailing '/' in request
       asyncRedirect.complete();
     });
 
     final Async asyncMainPage = testContext.async();
-    httpClient.getNow(Configuration.SERVER_PORT, "localhost", "/hystrix-dashboard/", response -> {
+    httpClient.getNow(serverPort, "localhost", "/hystrix-dashboard/", response -> {
       testContext.assertEquals(200, response.statusCode());
       asyncMainPage.complete();
     });
@@ -56,7 +59,7 @@ public class HystrixDashboardVerticleTest {
 
     final Async asyncProxying = testContext.async();
     final String url = "/hystrix-dashboard/proxy.stream?origin=http://localhost:8099/hystrix.stream";
-    httpClient.getNow(Configuration.SERVER_PORT, "localhost", url, response -> {
+    httpClient.getNow(serverPort, "localhost", url, response -> {
       testContext.assertEquals(200, response.statusCode());
       testContext.assertEquals("text/event-stream;charset=UTF-8", response.getHeader(HttpHeaders.CONTENT_TYPE));
       response.handler(buffer -> {
