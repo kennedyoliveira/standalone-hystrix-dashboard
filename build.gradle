@@ -138,6 +138,9 @@ bintray {
                 if (project.hasProperty('bintraySignPass'))
                     passphrase = project.property('bintraySignPass')
             }
+            mavenCentralSync {
+                sync = false
+            }
         }
     }
 }
