@@ -63,14 +63,21 @@ public class HystrixDashboardVerticle extends AbstractVerticle {
     });
     mainRouter.mountSubRouter("/hystrix-dashboard", hystrixRouter);
 
-    final Integer serverPort = config().getInteger(Configuration.SERVER_PORT, 7979);
-    final String bindAddress = config().getString(Configuration.BIND_ADDRESS, "0.0.0.0"); // NOPMD
+    final Integer systemServerPort = Integer.getInteger(Configuration.SERVER_PORT);
+    final String systemBindAddress = System.getProperty(Configuration.BIND_ADDRESS);
+    final String systemDisableCompression = System.getProperty(Configuration.DISABLE_COMPRESSION);
 
+    final Integer serverPort = systemServerPort != null ? systemServerPort : config().getInteger(Configuration.SERVER_PORT, 7979);
+    final String bindAddress = systemBindAddress != null ? systemBindAddress : config().getString(Configuration.BIND_ADDRESS, "0.0.0.0"); // NOPMD
+    final boolean disableCompression = systemDisableCompression != null ? Boolean.valueOf(systemDisableCompression) : config().getBoolean(Configuration.DISABLE_COMPRESSION,
+                                                                                                                                          Boolean.FALSE);
     final HttpServerOptions options = new HttpServerOptions().setTcpKeepAlive(true)
                                                              .setIdleTimeout(10000)
                                                              .setPort(serverPort)
                                                              .setHost(bindAddress)
-                                                             .setCompressionSupported(!config().getBoolean(Configuration.DISABLE_COMPRESSION, Boolean.FALSE));
+                                                             .setCompressionSupported(!disableCompression);
+
+    log.info("Compression support enabled: {}", !disableCompression);
 
     vertx.createHttpServer(options)
          .requestHandler(mainRouter::accept)

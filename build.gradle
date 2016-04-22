@@ -38,6 +38,10 @@ task wrapper(type: Wrapper) {
 // for the application plugin
 mainClassName = 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.HystrixDashboardLauncher'
 
+ext {
+    mainVerticleName = 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.HystrixDashboardVerticle'
+}
+
 distributions {
     main {
         contents {
@@ -145,6 +149,15 @@ bintray {
     }
 }
 
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                'Implementation-Version': project.version,
+                'Main-Class': project.property('mainClassName'),
+                'Main-Verticle': project.property('mainVerticleName'))
+    }
+}
+
 /**
  * Extracts the hystrix-dashboard webapp content, removing WEB-INF and META-INF since it won't be used
  */
@@ -163,7 +176,7 @@ tasks.processResources.finalizedBy 'extractHystrixDashboard'
 task('runDashboard', dependsOn: ['classes'], type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 
-    main = 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.HystrixDashboardLauncher'
+    main = project.property('mainClassName')
 
     jvmArgs = ['-Xmx2048m']
 }
@@ -171,12 +184,11 @@ task('runDashboard', dependsOn: ['classes'], type: JavaExec) {
 //create a single Jar with all dependencies
 task fatJar(type: Jar) {
     manifest {
-        attributes 'Implementation-Title': project.name,
+        attributes('Implementation-Title': project.name,
                 'Implementation-Version': project.version,
-                'Main-Class': 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.HystrixDashboardLauncher',
-                'Main-Verticle': 'com.github.kennedyoliveira.hystrix.contrib.standalone.dashboard.HystrixDashboardVerticle'
+                'Main-Class': project.property('mainClassName'),
+                'Main-Verticle': project.property('mainVerticleName'))
     }
-
     baseName = project.name
     from({ configurations.compile.collect { it.isDirectory() ? it : zipTree(it).asFileTree } }) {
         // exclude { println it.relativePath }
