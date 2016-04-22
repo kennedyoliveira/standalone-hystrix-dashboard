@@ -94,7 +94,7 @@
             "locked": "1.1.7"
         },
         "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
-            "locked": "1.5.1"
+            "locked": "1.5.2"
         },
         "com.netflix.hystrix:hystrix-core": {
             "locked": "1.5.2"
@@ -120,7 +120,7 @@
             "locked": "1.1.7"
         },
         "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
-            "locked": "1.5.1"
+            "locked": "1.5.2"
         },
         "com.netflix.hystrix:hystrix-core": {
             "locked": "1.5.2"
@@ -146,7 +146,7 @@
             "locked": "1.1.7"
         },
         "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
-            "locked": "1.5.1"
+            "locked": "1.5.2"
         },
         "com.netflix.hystrix:hystrix-core": {
             "locked": "1.5.2"
@@ -172,7 +172,7 @@
             "locked": "1.1.7"
         },
         "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
-            "locked": "1.5.1"
+            "locked": "1.5.2"
         },
         "com.netflix.hystrix:hystrix-core": {
             "locked": "1.5.2"
