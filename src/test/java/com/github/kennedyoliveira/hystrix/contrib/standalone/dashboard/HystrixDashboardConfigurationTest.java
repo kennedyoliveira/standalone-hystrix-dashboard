@@ -33,15 +33,15 @@ public class HystrixDashboardConfigurationTest {
 
   @Before
   public void setUp(TestContext testContext) throws Exception {
-    runTestOnContext.vertx().deployVerticle(new HystrixDashboardVerticle(), testContext.asyncAssertSuccess());
-  }
-
-  @Test(timeout = 2500L)
-  public void testConfigurationOptions(TestContext testContext) throws Exception {
     System.setProperty(Configuration.SERVER_PORT, String.valueOf(SERVER_PORT));
     System.setProperty(Configuration.DISABLE_COMPRESSION, String.valueOf(!Boolean.valueOf(SERVER_USE_COMPRESSION)));
     System.setProperty(Configuration.BIND_ADDRESS, SERVER_BIND_ADDRESS);
 
+    runTestOnContext.vertx().deployVerticle(new HystrixDashboardVerticle(), testContext.asyncAssertSuccess());
+  }
+
+  @Test
+  public void testConfigurationOptions(TestContext testContext) throws Exception {
     final HttpClientOptions options = new HttpClientOptions().setTryUseCompression(false);
 
     final HttpClient httpClient = runTestOnContext.vertx().createHttpClient(options);
