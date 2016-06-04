@@ -22,9 +22,10 @@ public class HystrixDashboardConfigurationTest {
 
   @Rule
   public final RestoreSystemProperties restoreSystemProperties = new RestoreSystemProperties();
-  private final int SERVER_PORT = 9999;
-  private final String SERVER_BIND_ADDRESS = "127.0.0.1";
-  private final String SERVER_USE_COMPRESSION = "true";
+  private final static int SERVER_PORT = 9999;
+  @SuppressWarnings({"PMD.AvoidUsingHardCodedIP"})
+  private final static String SERVER_BIND_ADDRESS = "127.0.0.1";
+  private final static String SERVER_USE_COMPRESSION = "true";
   @Rule
   public RunTestOnContext runTestOnContext = new RunTestOnContext();
 

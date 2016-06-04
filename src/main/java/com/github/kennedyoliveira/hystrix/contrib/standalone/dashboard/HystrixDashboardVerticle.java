@@ -45,6 +45,73 @@ public class HystrixDashboardVerticle extends AbstractVerticle {
    * @param startFuture The start future to pass the initialization result
    */
   private void initialize(Future<Void> startFuture) {
+    final Router mainRouter = createRoutes();
+    final HttpServerOptions options = getServerOptions();
+
+    startServer(startFuture, mainRouter, options);
+  }
+
+  /**
+   * Start the HTTP server.
+   *
+   * @param startFuture The start future to report failure or success for async start.
+   * @param mainRouter  {@link Router} with the routes for the server.
+   * @param options     {@link HttpServerOptions} with the server configuration.
+   */
+  private void startServer(Future<Void> startFuture, Router mainRouter, HttpServerOptions options) {
+    vertx.createHttpServer(options)
+         .requestHandler(mainRouter::accept)
+         .listen(result -> {
+           if (result.failed()) {
+             startFuture.fail(result.cause());
+           } else {
+             log.info("Listening on port: {}", options.getPort());
+             log.info("Access the dashboard in your browser: http://{}:{}/hystrix-dashboard/",
+                      "0.0.0.0".equals(options.getHost()) ? "localhost" : options.getHost(), // NOPMD
+                      options.getPort());
+             startFuture.complete();
+           }
+         });
+  }
+
+  /**
+   * <p>Read configuration for different sources and generate a {@link HttpServerOptions} with the configurations provided.</p>
+   * <p>Currently reading configuration options from:
+   * <ul>
+   * <li>Vert.x Config Option</li>
+   * <li>Command Line Option passed with {@code -D}</li>
+   * </ul>
+   * </p>
+   * <p>The list above is from the lesser priority to the highest, so currently the command line options is the highest priority and will
+   * override any other configuration option</p>
+   *
+   * @return {@link HttpServerOptions} with configuration for the server.
+   */
+  private HttpServerOptions getServerOptions() {
+    final Integer systemServerPort = Integer.getInteger(Configuration.SERVER_PORT);
+    final String systemBindAddress = System.getProperty(Configuration.BIND_ADDRESS);
+    final String systemDisableCompression = System.getProperty(Configuration.DISABLE_COMPRESSION);
+
+    final Integer serverPort = systemServerPort != null ? systemServerPort : config().getInteger(Configuration.SERVER_PORT, 7979);
+    final String bindAddress = systemBindAddress != null ? systemBindAddress : config().getString(Configuration.BIND_ADDRESS, "0.0.0.0"); // NOPMD
+    final boolean disableCompression = systemDisableCompression != null ? Boolean.valueOf(systemDisableCompression) : config().getBoolean(Configuration.DISABLE_COMPRESSION,
+                                                                                                                                          Boolean.FALSE);
+    final HttpServerOptions options = new HttpServerOptions().setTcpKeepAlive(true)
+                                                             .setIdleTimeout(10000)
+                                                             .setPort(serverPort)
+                                                             .setHost(bindAddress)
+                                                             .setCompressionSupported(!disableCompression);
+
+    log.info("Compression support enabled: {}", !disableCompression);
+    return options;
+  }
+
+  /**
+   * Create the routes for dashboard app
+   *
+   * @return A {@link Router} with all the routes needed for the app.
+   */
+  private Router createRoutes() {
     final Router hystrixRouter = Router.router(vertx);
 
     // proxy stream handler
@@ -69,35 +136,6 @@ public class HystrixDashboardVerticle extends AbstractVerticle {
               });
 
     mainRouter.mountSubRouter("/hystrix-dashboard", hystrixRouter);
-
-    final Integer systemServerPort = Integer.getInteger(Configuration.SERVER_PORT);
-    final String systemBindAddress = System.getProperty(Configuration.BIND_ADDRESS);
-    final String systemDisableCompression = System.getProperty(Configuration.DISABLE_COMPRESSION);
-
-    final Integer serverPort = systemServerPort != null ? systemServerPort : config().getInteger(Configuration.SERVER_PORT, 7979);
-    final String bindAddress = systemBindAddress != null ? systemBindAddress : config().getString(Configuration.BIND_ADDRESS, "0.0.0.0"); // NOPMD
-    final boolean disableCompression = systemDisableCompression != null ? Boolean.valueOf(systemDisableCompression) : config().getBoolean(Configuration.DISABLE_COMPRESSION,
-                                                                                                                                          Boolean.FALSE);
-    final HttpServerOptions options = new HttpServerOptions().setTcpKeepAlive(true)
-                                                             .setIdleTimeout(10000)
-                                                             .setPort(serverPort)
-                                                             .setHost(bindAddress)
-                                                             .setCompressionSupported(!disableCompression);
-
-    log.info("Compression support enabled: {}", !disableCompression);
-
-    vertx.createHttpServer(options)
-         .requestHandler(mainRouter::accept)
-         .listen(result -> {
-           if (result.failed()) {
-             startFuture.fail(result.cause());
-           } else {
-             log.info("Listening on port: {}", serverPort);
-             log.info("Access the dashboard in your browser: http://{}:{}/hystrix-dashboard/",
-                      "0.0.0.0".equals(bindAddress) ? "localhost" : bindAddress, // NOPMD
-                      serverPort);
-             startFuture.complete();
-           }
-         });
+    return mainRouter;
   }
 }
