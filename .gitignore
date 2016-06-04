@@ -11,3 +11,4 @@ gradle-app.setting
 .gradletasknamecache
 .idea
 .DS_Store
+.vertx
