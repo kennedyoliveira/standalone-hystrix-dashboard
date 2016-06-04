@@ -38,16 +38,20 @@ public class HystrixDashboardVerticleTest {
   public void testDashboard(TestContext testContext) throws Exception {
     final Async asyncRedirect = testContext.async();
     final HttpClient httpClient = runTestOnContext.vertx().createHttpClient();
-    httpClient.getNow(serverPort, "localhost", "/hystrix-dashboard", response -> {
-      testContext.assertEquals(301, response.statusCode()); // redirect due to missing trailing '/' in request
-      asyncRedirect.complete();
-    });
+    httpClient.get(serverPort, "localhost", "/hystrix-dashboard")
+              .handler(response -> {
+                testContext.assertEquals(301, response.statusCode()); // redirect due to missing trailing '/' in request
+              })
+              .exceptionHandler(testContext::fail)
+              .endHandler(e -> asyncRedirect.complete())
+              .end();
 
     final Async asyncMainPage = testContext.async();
-    httpClient.getNow(serverPort, "localhost", "/hystrix-dashboard/", response -> {
-      testContext.assertEquals(200, response.statusCode());
-      asyncMainPage.complete();
-    });
+    httpClient.get(serverPort, "localhost", "/hystrix-dashboard/")
+              .handler(response -> testContext.assertEquals(200, response.statusCode()))
+              .exceptionHandler(testContext::fail)
+              .endHandler(e -> asyncMainPage.complete())
+              .end();
 
     // generate some metrics
     new HystrixObservableCommand<String>(HystrixObservableCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("dummy"))) {
@@ -59,15 +63,18 @@ public class HystrixDashboardVerticleTest {
 
     final Async asyncProxying = testContext.async();
     final String url = "/hystrix-dashboard/proxy.stream?origin=http://localhost:8099/hystrix.stream";
-    httpClient.getNow(serverPort, "localhost", url, response -> {
-      testContext.assertEquals(200, response.statusCode());
-      testContext.assertEquals("text/event-stream;charset=UTF-8", response.getHeader(HttpHeaders.CONTENT_TYPE));
-      response.handler(buffer -> {
-        testContext.assertTrue(buffer.length() > 0);
-        testContext.assertTrue(buffer.toString().contains("data:")); // the first buffer will have a data
-        asyncProxying.complete();
-      });
-    });
+    httpClient.get(serverPort, "localhost", url)
+              .handler(response -> {
+                testContext.assertEquals(200, response.statusCode());
+                testContext.assertEquals("text/event-stream;charset=UTF-8", response.getHeader(HttpHeaders.CONTENT_TYPE));
+                response.handler(buffer -> {
+                  testContext.assertTrue(buffer.length() > 0);
+                  testContext.assertTrue(buffer.toString().contains("data:")); // the first buffer will have a data
+                });
+              })
+              .exceptionHandler(testContext::fail)
+              .endHandler(e -> asyncProxying.complete())
+              .end();
   }
 
   @After

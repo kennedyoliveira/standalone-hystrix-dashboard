@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 /**
  * This handler will proxy connection to a Hystrix Event Metrics stream using Basic Auth if present, and compressing the response.
@@ -32,14 +33,9 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
 
   @Override
   public void handle(RoutingContext requestCtx) {
-    String proxiedUrl = getProxyUrl(requestCtx);
-    if (proxiedUrl == null) return;
-
-    final URI uri;
-    uri = createUriFromUrl(proxiedUrl, requestCtx);
-    if (uri == null) return;
-
-    proxyRequest(uri, requestCtx);
+    getProxyUrl(requestCtx)
+        .flatMap(proxiedUrl -> createUriFromUrl(proxiedUrl, requestCtx))
+        .ifPresent(uri -> proxyRequest(uri, requestCtx));
   }
 
   /**
@@ -48,7 +44,7 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
    * @param requestCtx Context of the current request.
    * @return The url to proxy or null if it wasn't found.
    */
-  String getProxyUrl(RoutingContext requestCtx) {
+  Optional<String> getProxyUrl(RoutingContext requestCtx) {
     final HttpServerRequest serverRequest = requestCtx.request();
     final HttpServerResponse serverResponse = requestCtx.response();
 
@@ -58,7 +54,7 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
       log.warn("Request without origin");
       serverResponse.setStatusCode(500)
                     .end(Buffer.buffer("Required parameter 'origin' missing. Example: 107.20.175.135:7001".getBytes(StandardCharsets.UTF_8)));
-      return null;
+      return Optional.empty();
     }
     origin = origin.trim();
 
@@ -91,7 +87,7 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
       }
     }
 
-    return url.toString();
+    return Optional.of(url.toString());
   }
 
   /**
@@ -101,17 +97,17 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
    * @param requestCtx Context of the current request.
    * @return If succeed, a {@link URI}, otherwise {@code null}.
    */
-  URI createUriFromUrl(String proxiedUrl, RoutingContext requestCtx) {
+  Optional<URI> createUriFromUrl(String proxiedUrl, RoutingContext requestCtx) {
     URI uri;
     try {
       uri = URI.create(proxiedUrl);
     } catch (Exception e) {
-      final String errorMsg = "Failed to parse the url [" + proxiedUrl + "] to proxy.";
+      final String errorMsg = String.format("Failed to parse the url [%s] to proxy.", proxiedUrl);
       log.error(errorMsg, e);
       requestCtx.response().setStatusCode(500).end(errorMsg);
-      return null;
+      return Optional.empty();
     }
-    return uri;
+    return Optional.of(uri);
   }
 
   /**
@@ -130,7 +126,7 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
     int port = proxiedUrl.getPort();
 
     if (port == -1) {
-      // if there are no port, and the scheme is https, set as 443, default https port, else set as 80, default HTTP port
+      // if there are no port, and the scheme is HTTPS, set as 443, default HTTPS port, else set as 80, default HTTP port
       if ("https".equalsIgnoreCase(scheme)) {
         log.warn("No port specified in the url to proxy [{}], using 443 since it's a HTTPS request.", proxiedUrl);
         port = 443;
@@ -146,11 +142,8 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
     final HttpClient httpClient = createHttpClient(requestCtx.vertx());
     final HttpClientRequest httpClientRequest = httpClient.get(port, host, path + (proxiedUrl.getQuery() != null ? "?" + proxiedUrl.getQuery() : ""));
 
-    // configure Basic Auth if present
-    final String authorization = serverRequest.getParam("authorization");
-    if (authorization != null) {
-      httpClientRequest.putHeader(HttpHeaders.AUTHORIZATION, authorization);
-    }
+    // setup basic auth if present
+    configureBasicAuth(serverRequest, httpClientRequest);
 
     // set the serverResponse handler
     httpClientRequest.handler(clientResponse -> {
@@ -218,6 +211,19 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
 
     // do the request
     httpClientRequest.end();
+  }
+
+  /**
+   * Configure basic auth for proxied stream
+   *
+   * @param serverRequest     request
+   * @param httpClientRequest client that will proxy the request
+   */
+  void configureBasicAuth(HttpServerRequest serverRequest, HttpClientRequest httpClientRequest) {
+    final String authorization = serverRequest.getParam("authorization");
+    if (authorization != null) {
+      httpClientRequest.putHeader(HttpHeaders.AUTHORIZATION, authorization);
+    }
   }
 
   /**

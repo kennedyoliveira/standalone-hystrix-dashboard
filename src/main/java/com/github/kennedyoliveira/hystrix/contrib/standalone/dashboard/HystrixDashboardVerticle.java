@@ -49,18 +49,25 @@ public class HystrixDashboardVerticle extends AbstractVerticle {
 
     // proxy stream handler
     hystrixRouter.get("/proxy.stream").handler(HystrixDashboardProxyConnectionHandler.create());
-    hystrixRouter.route("/*").handler(StaticHandler.create());
+    hystrixRouter.route("/*").handler(StaticHandler.create()
+                                                   .setCachingEnabled(true)
+                                                   .setCacheEntryTimeout(1000L * 60 * 60 * 24));
 
     final Router mainRouter = Router.router(vertx);
 
     // if send a route without the trailing '/' some problems will occur, so i redirect the guy using the trailing '/'
-    mainRouter.route("/hystrix-dashboard").handler(context -> {
-      if (context.request().path().endsWith("/")) {
-        context.next();
-      } else {
-        context.response().setStatusCode(HttpResponseStatus.MOVED_PERMANENTLY.code()).putHeader(HttpHeaders.LOCATION, "/hystrix-dashboard/").end();
-      }
-    });
+    mainRouter.route("/hystrix-dashboard")
+              .handler(context -> {
+                if (context.request().path().endsWith("/")) {
+                  context.next();
+                } else {
+                  context.response()
+                         .setStatusCode(HttpResponseStatus.MOVED_PERMANENTLY.code())
+                         .putHeader(HttpHeaders.LOCATION, "/hystrix-dashboard/")
+                         .end();
+                }
+              });
+
     mainRouter.mountSubRouter("/hystrix-dashboard", hystrixRouter);
 
     final Integer systemServerPort = Integer.getInteger(Configuration.SERVER_PORT);
