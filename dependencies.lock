@@ -4,7 +4,7 @@
             "locked": "1.1.7"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.2.1"
+            "locked": "3.3.0"
         },
         "org.projectlombok:lombok": {
             "locked": "1.16.8"
@@ -18,7 +18,7 @@
             "locked": "1.1.7"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.2.1"
+            "locked": "3.3.0"
         },
         "org.projectlombok:lombok": {
             "locked": "1.16.8"
@@ -32,7 +32,7 @@
             "locked": "1.1.7"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.2.1"
+            "locked": "3.3.0"
         },
         "org.projectlombok:lombok": {
             "locked": "1.16.8"
@@ -46,7 +46,7 @@
             "locked": "1.1.7"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.2.1"
+            "locked": "3.3.0"
         },
         "org.projectlombok:lombok": {
             "project": true
@@ -67,7 +67,7 @@
     },
     "pmd": {
         "net.sourceforge.pmd:pmd-java": {
-            "locked": "5.4.2"
+            "locked": "5.5.0"
         }
     },
     "provided": {
@@ -80,7 +80,7 @@
             "locked": "1.1.7"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.2.1"
+            "locked": "3.3.0"
         },
         "org.projectlombok:lombok": {
             "locked": "1.16.8"
@@ -96,17 +96,23 @@
         "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
             "locked": "1.5.3"
         },
+        "com.github.stefanbirkner:system-rules": {
+            "locked": "1.16.0"
+        },
         "com.netflix.hystrix:hystrix-core": {
             "locked": "1.5.3"
         },
         "io.vertx:vertx-unit": {
-            "locked": "3.2.1"
+            "locked": "3.3.0"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.2.1"
+            "locked": "3.3.0"
         },
         "junit:junit": {
             "locked": "4.12"
+        },
+        "org.mockito:mockito-core": {
+            "locked": "1.10.19"
         },
         "org.projectlombok:lombok": {
             "locked": "1.16.8"
@@ -122,17 +128,23 @@
         "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
             "locked": "1.5.3"
         },
+        "com.github.stefanbirkner:system-rules": {
+            "locked": "1.16.0"
+        },
         "com.netflix.hystrix:hystrix-core": {
             "locked": "1.5.3"
         },
         "io.vertx:vertx-unit": {
-            "locked": "3.2.1"
+            "locked": "3.3.0"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.2.1"
+            "locked": "3.3.0"
         },
         "junit:junit": {
             "locked": "4.12"
+        },
+        "org.mockito:mockito-core": {
+            "locked": "1.10.19"
         },
         "org.projectlombok:lombok": {
             "locked": "1.16.8"
@@ -148,17 +160,23 @@
         "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
             "locked": "1.5.3"
         },
+        "com.github.stefanbirkner:system-rules": {
+            "locked": "1.16.0"
+        },
         "com.netflix.hystrix:hystrix-core": {
             "locked": "1.5.3"
         },
         "io.vertx:vertx-unit": {
-            "locked": "3.2.1"
+            "locked": "3.3.0"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.2.1"
+            "locked": "3.3.0"
         },
         "junit:junit": {
             "locked": "4.12"
+        },
+        "org.mockito:mockito-core": {
+            "locked": "1.10.19"
         },
         "org.projectlombok:lombok": {
             "locked": "1.16.8"
@@ -174,17 +192,23 @@
         "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
             "locked": "1.5.3"
         },
+        "com.github.stefanbirkner:system-rules": {
+            "locked": "1.16.0"
+        },
         "com.netflix.hystrix:hystrix-core": {
             "locked": "1.5.3"
         },
         "io.vertx:vertx-unit": {
-            "locked": "3.2.1"
+            "locked": "3.3.0"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.2.1"
+            "locked": "3.3.0"
         },
         "junit:junit": {
             "locked": "4.12"
+        },
+        "org.mockito:mockito-core": {
+            "locked": "1.10.19"
         },
         "org.projectlombok:lombok": {
             "locked": "1.16.8"

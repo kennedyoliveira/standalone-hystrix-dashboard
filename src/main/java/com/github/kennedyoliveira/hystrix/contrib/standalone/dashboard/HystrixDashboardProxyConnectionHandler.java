@@ -145,6 +145,8 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
     // setup basic auth if present
     configureBasicAuth(serverRequest, httpClientRequest);
 
+    // TODO Implement the connection close that is available on vert.x 3.3 instead of closing the client
+
     // set the serverResponse handler
     httpClientRequest.handler(clientResponse -> {
       // response success
