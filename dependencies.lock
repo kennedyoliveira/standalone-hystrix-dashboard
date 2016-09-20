@@ -4,10 +4,10 @@
             "locked": "1.1.7"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.0"
+            "locked": "3.3.2"
         },
         "org.projectlombok:lombok": {
-            "locked": "1.16.8"
+            "locked": "1.16.10"
         },
         "org.slf4j:slf4j-api": {
             "locked": "1.7.21"
@@ -18,10 +18,10 @@
             "locked": "1.1.7"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.0"
+            "locked": "3.3.2"
         },
         "org.projectlombok:lombok": {
-            "locked": "1.16.8"
+            "locked": "1.16.10"
         },
         "org.slf4j:slf4j-api": {
             "locked": "1.7.21"
@@ -32,10 +32,10 @@
             "locked": "1.1.7"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.0"
+            "locked": "3.3.2"
         },
         "org.projectlombok:lombok": {
-            "locked": "1.16.8"
+            "locked": "1.16.10"
         },
         "org.slf4j:slf4j-api": {
             "locked": "1.7.21"
@@ -46,7 +46,7 @@
             "locked": "1.1.7"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.0"
+            "locked": "3.3.2"
         },
         "org.projectlombok:lombok": {
             "project": true
@@ -62,7 +62,7 @@
     },
     "hystrixDashboard": {
         "com.netflix.hystrix:hystrix-dashboard": {
-            "locked": "1.5.3"
+            "locked": "1.5.4"
         }
     },
     "pmd": {
@@ -72,7 +72,7 @@
     },
     "provided": {
         "org.projectlombok:lombok": {
-            "locked": "1.16.8"
+            "locked": "1.16.10"
         }
     },
     "runtime": {
@@ -80,10 +80,10 @@
             "locked": "1.1.7"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.0"
+            "locked": "3.3.2"
         },
         "org.projectlombok:lombok": {
-            "locked": "1.16.8"
+            "locked": "1.16.10"
         },
         "org.slf4j:slf4j-api": {
             "locked": "1.7.21"
@@ -100,13 +100,13 @@
             "locked": "1.16.0"
         },
         "com.netflix.hystrix:hystrix-core": {
-            "locked": "1.5.3"
+            "locked": "1.5.4"
         },
         "io.vertx:vertx-unit": {
-            "locked": "3.3.0"
+            "locked": "3.3.2"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.0"
+            "locked": "3.3.2"
         },
         "junit:junit": {
             "locked": "4.12"
@@ -115,7 +115,7 @@
             "locked": "1.10.19"
         },
         "org.projectlombok:lombok": {
-            "locked": "1.16.8"
+            "locked": "1.16.10"
         },
         "org.slf4j:slf4j-api": {
             "locked": "1.7.21"
@@ -132,13 +132,13 @@
             "locked": "1.16.0"
         },
         "com.netflix.hystrix:hystrix-core": {
-            "locked": "1.5.3"
+            "locked": "1.5.4"
         },
         "io.vertx:vertx-unit": {
-            "locked": "3.3.0"
+            "locked": "3.3.2"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.0"
+            "locked": "3.3.2"
         },
         "junit:junit": {
             "locked": "4.12"
@@ -147,7 +147,7 @@
             "locked": "1.10.19"
         },
         "org.projectlombok:lombok": {
-            "locked": "1.16.8"
+            "locked": "1.16.10"
         },
         "org.slf4j:slf4j-api": {
             "locked": "1.7.21"
@@ -164,13 +164,13 @@
             "locked": "1.16.0"
         },
         "com.netflix.hystrix:hystrix-core": {
-            "locked": "1.5.3"
+            "locked": "1.5.4"
         },
         "io.vertx:vertx-unit": {
-            "locked": "3.3.0"
+            "locked": "3.3.2"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.0"
+            "locked": "3.3.2"
         },
         "junit:junit": {
             "locked": "4.12"
@@ -179,7 +179,7 @@
             "locked": "1.10.19"
         },
         "org.projectlombok:lombok": {
-            "locked": "1.16.8"
+            "locked": "1.16.10"
         },
         "org.slf4j:slf4j-api": {
             "locked": "1.7.21"
@@ -196,13 +196,13 @@
             "locked": "1.16.0"
         },
         "com.netflix.hystrix:hystrix-core": {
-            "locked": "1.5.3"
+            "locked": "1.5.4"
         },
         "io.vertx:vertx-unit": {
-            "locked": "3.3.0"
+            "locked": "3.3.2"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.0"
+            "locked": "3.3.2"
         },
         "junit:junit": {
             "locked": "4.12"
@@ -211,7 +211,7 @@
             "locked": "1.10.19"
         },
         "org.projectlombok:lombok": {
-            "locked": "1.16.8"
+            "locked": "1.16.10"
         },
         "org.slf4j:slf4j-api": {
             "locked": "1.7.21"

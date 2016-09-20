@@ -61,14 +61,14 @@ public class HystrixDashboardVerticle extends AbstractVerticle {
   private void startServer(Future<Void> startFuture, Router mainRouter, HttpServerOptions options) {
     vertx.createHttpServer(options)
          .requestHandler(mainRouter::accept)
-         .listen(result -> {
-           if (result.failed()) {
-             startFuture.fail(result.cause());
+         .listen(res -> {
+           if (res.failed()) {
+             startFuture.fail(res.cause());
            } else {
              log.info("Listening on port: {}", options.getPort());
              log.info("Access the dashboard in your browser: http://{}:{}/hystrix-dashboard/",
                       "0.0.0.0".equals(options.getHost()) ? "localhost" : options.getHost(), // NOPMD
-                      options.getPort());
+                      res.result().actualPort());
              startFuture.complete();
            }
          });
@@ -116,9 +116,14 @@ public class HystrixDashboardVerticle extends AbstractVerticle {
 
     // proxy stream handler
     hystrixRouter.get("/proxy.stream").handler(HystrixDashboardProxyConnectionHandler.create());
-    hystrixRouter.route("/*").handler(StaticHandler.create()
-                                                   .setCachingEnabled(true)
-                                                   .setCacheEntryTimeout(1000L * 60 * 60 * 24));
+
+    // proxy the eureka apps listing
+    hystrixRouter.get("/eureka").handler(HystrixDashboardProxyEurekaAppsListingHandler.create(vertx));
+
+    hystrixRouter.route("/*")
+                 .handler(StaticHandler.create()
+                                       .setCachingEnabled(true)
+                                       .setCacheEntryTimeout(1000L * 60 * 60 * 24));
 
     final Router mainRouter = Router.router(vertx);
 
