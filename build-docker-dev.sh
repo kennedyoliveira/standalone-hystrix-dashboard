@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
 cd docker
-docker build -t kennedyoliveira/hystrix-dashboard:dev .
+docker build --force-rm --no-cache -t kennedyoliveira/hystrix-dashboard:dev .
