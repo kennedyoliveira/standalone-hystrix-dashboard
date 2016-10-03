@@ -77,7 +77,6 @@ public class HystrixDashboardProxyEurekaTest {
         log.info("Response Body: {}", body);
         testContext.assertTrue(body.contains("Connection refused"));
         proxyRequest.complete();
-
       });
     });
 
