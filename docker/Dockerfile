@@ -1,7 +1,7 @@
 FROM kennedyoliveira/java8
 MAINTAINER Kennedy Oliveira <kennedy.oliveira@outlook.com>
 
-ENV STANDALONE_HYSTRIX_VERSION 1.5.3
+ENV STANDALONE_HYSTRIX_VERSION 1.5.6
 ENV HYSTRIX_DASHBOARD_HOME /opt/standalone-hystrix-dashboard/
 
 RUN apk add --update curl
