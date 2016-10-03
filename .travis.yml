@@ -6,6 +6,10 @@ jdk:
 sudo:
   false
 
+cache:
+  directories:
+  - $HOME/.gradle/caches
+
 install:
   ./gradlew assemble
 
