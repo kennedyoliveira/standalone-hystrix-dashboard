@@ -8,6 +8,7 @@ import io.vertx.ext.web.RoutingContext;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -62,27 +63,32 @@ public class HystrixDashboardProxyEurekaAppsListingHandler implements Handler<Ro
         final String path = uri.getPath();
 
         httpClient.get(port, host, path)
-                  .handler(clientResp -> {
+                  .handler(clientResp -> clientResp.bodyHandler(respBuffer -> {
                     // proxied eureka request OK
                     if (clientResp.statusCode() == 200) {
-                      clientResp.bodyHandler(respBuffer -> response.putHeader(HttpHeaders.CONTENT_TYPE, clientResp.headers().get(HttpHeaders.CONTENT_TYPE))
-                                                                   .end(respBuffer));
+                      response.putHeader(HttpHeaders.CONTENT_TYPE, clientResp.headers().get(HttpHeaders.CONTENT_TYPE))
+                              .end(respBuffer);
                     } else {
+                      log.error("Fetching eureka apps from url: [{}]\nResponse Status: [{}], Response: [{}]",
+                                eurekaUrl,
+                                clientResp.statusCode(),
+                                respBuffer.toString(StandardCharsets.UTF_8));
                       internalServerError(response, "Error while fetching eureka apps from url " + eurekaUrl + ".");
                     }
+                  }))
+                  .exceptionHandler(ex -> {
+                    log.error("Fetching eureka apps from url: [ " + eurekaUrl + "]", ex);
+                    internalServerError(response, "Error while fetching eureka apps from url " + eurekaUrl + ".\n" + ex.getMessage());
                   })
-                  .exceptionHandler(ex -> internalServerError(response, "Error while fetching eureka apps from url " + eurekaUrl + ".\n" + ex.getMessage()))
                   .end();
       } catch (Exception e) {
         log.error("Fetching eureka apps", e);
-
-        response.setStatusCode(HttpResponseStatus.INTERNAL_SERVER_ERROR.code())
-                .end("Error while fetching eureka apps from url " + eurekaUrl + ".\n" + e.getMessage());
+        internalServerError(response, "Error while fetching eureka apps from url " + eurekaUrl + ".\n" + e.getMessage());
       }
     }
   }
 
   private void internalServerError(HttpServerResponse response, String message) {
-    response.setStatusCode(500).end(message);
+    response.setStatusCode(HttpResponseStatus.INTERNAL_SERVER_ERROR.code()).end(message);
   }
 }
