@@ -10,6 +10,7 @@ import io.vertx.ext.unit.Async;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.junit.VertxUnitRunner;
 import io.vertx.ext.web.Router;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author Kennedy Oliveira
  */
+@Slf4j
 @RunWith(VertxUnitRunner.class)
 public class HystrixDashboardProxyEurekaTest {
 
@@ -72,8 +74,8 @@ public class HystrixDashboardProxyEurekaTest {
 
       resp.bodyHandler(bodyBuffer -> {
         final String body = bodyBuffer.toString(StandardCharsets.UTF_8);
-
-        testContext.assertTrue(body.contains("Connection refused: localhost/127.0.0.1:54321"));
+        log.info("Response Body: {}", body);
+        testContext.assertTrue(body.contains("Connection refused"));
         proxyRequest.complete();
 
       });
