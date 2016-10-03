@@ -182,7 +182,7 @@ task extractHystrixDashboard(type: Copy) {
     into "$buildDir/resources/main/webroot"
 }
 
-tasks.processResources.finalizedBy 'extractHystrixDashboard'
+tasks.processResources.dependsOn extractHystrixDashboard
 
 task('runDashboard', dependsOn: ['classes'], type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
