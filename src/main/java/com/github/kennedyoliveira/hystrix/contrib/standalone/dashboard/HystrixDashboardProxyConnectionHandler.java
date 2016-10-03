@@ -98,16 +98,14 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
    * @return If succeed, a {@link URI}, otherwise {@code null}.
    */
   Optional<URI> createUriFromUrl(String proxiedUrl, RoutingContext requestCtx) {
-    URI uri;
     try {
-      uri = URI.create(proxiedUrl);
+      return Optional.of(URI.create(proxiedUrl));
     } catch (Exception e) {
       final String errorMsg = String.format("Failed to parse the url [%s] to proxy.", proxiedUrl);
       log.error(errorMsg, e);
       requestCtx.response().setStatusCode(500).end(errorMsg);
       return Optional.empty();
     }
-    return Optional.of(uri);
   }
 
   /**
@@ -182,10 +180,10 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
       }
     });
 
-    // handle errors on the client side (hsytrix-dashboard client)
+    // handle errors on the client side (hystrix-dashboard client)
     requestCtx.response().closeHandler(ignored -> {
       log.warn("[Client disconnected] Connection closed on client side");
-      log.info("Stopping the proxing...");
+      log.info("Stopping the proxying...");
       closeQuietlyHttpClient(httpClient);
     });
 

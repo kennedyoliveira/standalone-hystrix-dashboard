@@ -6,11 +6,16 @@ jdk:
 sudo:
   false
 
+cache:
+  directories:
+  - $HOME/.gradle/caches
+  - $HOME/.gradle/wrapper
+
 install:
   ./gradlew assemble
 
 script:
-  ./gradlew clean check
+  ./gradlew clean check --info
 
 after_script:
   ./gradlew -Pversioneye.api_key=$VERSIONEYE_API_KEY versioneye-update
