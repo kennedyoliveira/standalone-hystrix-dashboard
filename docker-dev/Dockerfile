@@ -1,4 +1,4 @@
-FROM openjdk:jdk
+FROM ubuntu:16.04
 MAINTAINER Kennedy Oliveira <kennedy.oliveira@outlook.com>
 
 ENV GIT_REPO https://github.com/kennedyoliveira/standalone-hystrix-dashboard.git
@@ -6,6 +6,7 @@ ENV HYSTRIX_DASHBOARD_HOME /opt/standalone-hystrix-dashboard/
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
+        openjdk-8-jdk-headless \
         curl \
         git
 
