@@ -137,7 +137,7 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
     log.info("Proxing request to {}", proxiedUrl);
 
     // create a request
-    final HttpClient httpClient = createHttpClient(requestCtx.vertx());
+    final HttpClient httpClient = createHttpClient(requestCtx.vertx(), "https".equalsIgnoreCase(scheme));
     final HttpClientRequest httpClientRequest = httpClient.get(port, host, path + (proxiedUrl.getQuery() != null ? "?" + proxiedUrl.getQuery() : ""));
 
     // setup basic auth if present
@@ -243,9 +243,10 @@ public class HystrixDashboardProxyConnectionHandler implements Handler<RoutingCo
    *
    * @return The {@link HttpClient} for proxying requests.
    */
-  private HttpClient createHttpClient(Vertx vertx) {
+  private HttpClient createHttpClient(Vertx vertx, boolean useHttps) {
     final HttpClientOptions httpClientOptions = new HttpClientOptions().setKeepAlive(false)
                                                                        .setTryUseCompression(true)
+                                                                       .setSsl(useHttps)
                                                                        .setMaxPoolSize(1); // just 1 because the client will be closed when the request end
 
     return vertx.createHttpClient(httpClientOptions);
