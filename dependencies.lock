@@ -1,58 +1,44 @@
 {
     "compile": {
         "ch.qos.logback:logback-classic": {
-            "locked": "1.1.7"
+            "locked": "1.2.3"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.3"
+            "locked": "3.4.2"
         },
         "org.projectlombok:lombok": {
-            "locked": "1.16.10"
+            "locked": "1.16.18"
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.21"
+            "locked": "1.7.25"
         }
     },
     "compileClasspath": {
         "ch.qos.logback:logback-classic": {
-            "locked": "1.1.7"
+            "locked": "1.2.3"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.3"
+            "locked": "3.4.2"
         },
         "org.projectlombok:lombok": {
-            "locked": "1.16.10"
+            "locked": "1.16.18"
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.21"
-        }
-    },
-    "compileOnly": {
-        "ch.qos.logback:logback-classic": {
-            "locked": "1.1.7"
-        },
-        "io.vertx:vertx-web": {
-            "locked": "3.3.3"
-        },
-        "org.projectlombok:lombok": {
-            "locked": "1.16.10"
-        },
-        "org.slf4j:slf4j-api": {
-            "locked": "1.7.21"
+            "locked": "1.7.25"
         }
     },
     "default": {
         "ch.qos.logback:logback-classic": {
-            "locked": "1.1.7"
+            "locked": "1.2.3"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.3"
+            "locked": "3.4.2"
         },
         "org.projectlombok:lombok": {
             "project": true
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.21"
+            "locked": "1.7.25"
         }
     },
     "findbugs": {
@@ -62,36 +48,50 @@
     },
     "hystrixDashboard": {
         "com.netflix.hystrix:hystrix-dashboard": {
-            "locked": "1.5.6"
+            "locked": "1.5.12"
         }
     },
     "pmd": {
         "net.sourceforge.pmd:pmd-java": {
-            "locked": "5.5.0"
+            "locked": "5.8.1"
         }
     },
     "provided": {
         "org.projectlombok:lombok": {
-            "locked": "1.16.10"
+            "locked": "1.16.18"
         }
     },
     "runtime": {
         "ch.qos.logback:logback-classic": {
-            "locked": "1.1.7"
+            "locked": "1.2.3"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.3"
+            "locked": "3.4.2"
         },
         "org.projectlombok:lombok": {
-            "locked": "1.16.10"
+            "locked": "1.16.18"
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.21"
+            "locked": "1.7.25"
+        }
+    },
+    "runtimeClasspath": {
+        "ch.qos.logback:logback-classic": {
+            "locked": "1.2.3"
+        },
+        "io.vertx:vertx-web": {
+            "locked": "3.4.2"
+        },
+        "org.projectlombok:lombok": {
+            "locked": "1.16.18"
+        },
+        "org.slf4j:slf4j-api": {
+            "locked": "1.7.25"
         }
     },
     "testCompile": {
         "ch.qos.logback:logback-classic": {
-            "locked": "1.1.7"
+            "locked": "1.2.3"
         },
         "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
             "locked": "1.5.6"
@@ -100,13 +100,13 @@
             "locked": "1.16.1"
         },
         "com.netflix.hystrix:hystrix-core": {
-            "locked": "1.5.6"
+            "locked": "1.5.12"
         },
         "io.vertx:vertx-unit": {
-            "locked": "3.3.3"
+            "locked": "3.4.2"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.3"
+            "locked": "3.4.2"
         },
         "junit:junit": {
             "locked": "4.12"
@@ -115,15 +115,15 @@
             "locked": "1.10.19"
         },
         "org.projectlombok:lombok": {
-            "locked": "1.16.10"
+            "locked": "1.16.18"
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.21"
+            "locked": "1.7.25"
         }
     },
     "testCompileClasspath": {
         "ch.qos.logback:logback-classic": {
-            "locked": "1.1.7"
+            "locked": "1.2.3"
         },
         "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
             "locked": "1.5.6"
@@ -132,13 +132,13 @@
             "locked": "1.16.1"
         },
         "com.netflix.hystrix:hystrix-core": {
-            "locked": "1.5.6"
+            "locked": "1.5.12"
         },
         "io.vertx:vertx-unit": {
-            "locked": "3.3.3"
+            "locked": "3.4.2"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.3"
+            "locked": "3.4.2"
         },
         "junit:junit": {
             "locked": "4.12"
@@ -147,47 +147,15 @@
             "locked": "1.10.19"
         },
         "org.projectlombok:lombok": {
-            "locked": "1.16.10"
+            "locked": "1.16.18"
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.21"
-        }
-    },
-    "testCompileOnly": {
-        "ch.qos.logback:logback-classic": {
-            "locked": "1.1.7"
-        },
-        "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
-            "locked": "1.5.6"
-        },
-        "com.github.stefanbirkner:system-rules": {
-            "locked": "1.16.1"
-        },
-        "com.netflix.hystrix:hystrix-core": {
-            "locked": "1.5.6"
-        },
-        "io.vertx:vertx-unit": {
-            "locked": "3.3.3"
-        },
-        "io.vertx:vertx-web": {
-            "locked": "3.3.3"
-        },
-        "junit:junit": {
-            "locked": "4.12"
-        },
-        "org.mockito:mockito-core": {
-            "locked": "1.10.19"
-        },
-        "org.projectlombok:lombok": {
-            "locked": "1.16.10"
-        },
-        "org.slf4j:slf4j-api": {
-            "locked": "1.7.21"
+            "locked": "1.7.25"
         }
     },
     "testRuntime": {
         "ch.qos.logback:logback-classic": {
-            "locked": "1.1.7"
+            "locked": "1.2.3"
         },
         "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
             "locked": "1.5.6"
@@ -196,13 +164,13 @@
             "locked": "1.16.1"
         },
         "com.netflix.hystrix:hystrix-core": {
-            "locked": "1.5.6"
+            "locked": "1.5.12"
         },
         "io.vertx:vertx-unit": {
-            "locked": "3.3.3"
+            "locked": "3.4.2"
         },
         "io.vertx:vertx-web": {
-            "locked": "3.3.3"
+            "locked": "3.4.2"
         },
         "junit:junit": {
             "locked": "4.12"
@@ -211,10 +179,42 @@
             "locked": "1.10.19"
         },
         "org.projectlombok:lombok": {
-            "locked": "1.16.10"
+            "locked": "1.16.18"
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.21"
+            "locked": "1.7.25"
+        }
+    },
+    "testRuntimeClasspath": {
+        "ch.qos.logback:logback-classic": {
+            "locked": "1.2.3"
+        },
+        "com.github.kennedyoliveira:hystrix-vertx-metrics-stream": {
+            "locked": "1.5.6"
+        },
+        "com.github.stefanbirkner:system-rules": {
+            "locked": "1.16.1"
+        },
+        "com.netflix.hystrix:hystrix-core": {
+            "locked": "1.5.12"
+        },
+        "io.vertx:vertx-unit": {
+            "locked": "3.4.2"
+        },
+        "io.vertx:vertx-web": {
+            "locked": "3.4.2"
+        },
+        "junit:junit": {
+            "locked": "4.12"
+        },
+        "org.mockito:mockito-core": {
+            "locked": "1.10.19"
+        },
+        "org.projectlombok:lombok": {
+            "locked": "1.16.18"
+        },
+        "org.slf4j:slf4j-api": {
+            "locked": "1.7.25"
         }
     }
 }

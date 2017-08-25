@@ -6,14 +6,14 @@ buildscript {
 }
 
 plugins {
-    id 'nebula.dependency-recommender' version '3.6.3'
-    id 'nebula.dependency-lock' version '4.3.0'
-    id 'nebula.release' version '4.1.0'
+    id 'nebula.dependency-recommender' version '5.0.0'
+    id 'nebula.dependency-lock' version '4.9.4'
+    id 'nebula.release' version '6.0.0'
     id 'nebula.contacts' version '3.0.1'
-    id 'nebula.info' version '3.2.1'
-    id 'nebula.nebula-bintray' version '3.5.0'
+    id 'nebula.info' version '3.6.0'
+    id 'nebula.nebula-bintray' version '3.5.2'
     id 'nebula.provided-base' version '3.1.0'
-    id "org.standardout.versioneye" version '1.4.0'
+    id "org.standardout.versioneye" version '1.5.0'
 }
 
 apply plugin: 'java'
@@ -41,7 +41,7 @@ contacts {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.1'
+    gradleVersion = '4.1'
 }
 
 // for the application plugin
@@ -101,7 +101,7 @@ findbugs {
 }
 
 pmd {
-    toolVersion = '5.5.1'
+    toolVersion = '5.8.1'
 }
 
 // qa plugin configuration to export html instead of xml
