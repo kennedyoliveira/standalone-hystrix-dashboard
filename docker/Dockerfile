@@ -13,4 +13,4 @@ RUN mkdir -p $HYSTRIX_DASHBOARD_HOME && \
 
 WORKDIR $HYSTRIX_DASHBOARD_HOME
 EXPOSE 7979
-ENTRYPOINT exec java -jar $JVM_ARGS standalone-hystrix-dashboard-$STANDALONE_HYSTRIX_VERSION-all.jar
+ENTRYPOINT exec java $JVM_OPTS -jar standalone-hystrix-dashboard-$STANDALONE_HYSTRIX_VERSION-all.jar $JVM_ARGS
